@@ -61,7 +61,7 @@ class SignUpForm extends Component
           type="text"
           placeholder="Email Address"
         />
-        <
+
       </ form>
     );
   }
