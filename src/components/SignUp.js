@@ -4,8 +4,11 @@ import {
     withRouter,
 } from 'react-router-dom';
 
-import { auth} from "../firebase";
 import * as routes from '../constants/routes';
+import {
+auth,
+db,
+} from "../firebase";
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -35,34 +38,40 @@ class SignUpForm extends Component
     this.state = {INITIAL_STATE};
   }
 
-  onSubmit = (event) => {
-      const {
-          username,
-          email,
-          passwordOne,
-      } = this.state;
+    onSubmit = (event) => {
+        const {
+            username,
+            email,
+            passwordOne,
+        } = this.state;
 
-      const {
-          history,
-      } = this.props;
+        const {
+            history,
+        } = this.props;
 
-      auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-          .then(authUser => {
-              this.setState(() => ({...INITIAL_STATE}));
-              history.push(routes.HOME);
-          })
-          .catch(error => {
-              this.setState(byPropKey('error', error));
-          });
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+        .then(authUser => {
+            db.doCreateUser(authUser.uid, username, email)
+                .then(() => {
+                    this.setState(() => ({...INITIAL_STATE}));
+                    history.push(routes.HOME);
+                })
+                .catch(error => {
+                    this.setState(byPropKey('error', error));
+                });
+            })
+            .catch(error => {
+                this.setState(byPropKey('error', error));
+            });
 
-      event.preventDefault();
+        event.preventDefault();
 
-  }
+    }
 
-  render() 
+  render()
   {
 
-    const 
+    const
     {
       username,
       email,
