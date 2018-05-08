@@ -11,3 +11,6 @@ A simple baseline project to be built off of.
 * Sign Out
 * Password reset via email 
 * Simple authorization checks for pages
+
+### Not Provided
+* Everything Else
