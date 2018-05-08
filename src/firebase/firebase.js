@@ -11,7 +11,7 @@ var config = {
 };
 
 if(!firebase.apps.length){
-    const defApp = firebase.initializeApp(config);
+firebase.initializeApp(config);
 }
 
 const db = firebase.database();
