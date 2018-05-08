@@ -1,6 +1,5 @@
-import * as firebase from 'firebase';
+const firebase = require('firebase');
 
-// Initialize Firebase
 var config = {
     apiKey: "AIzaSyDsD3ZgnIQhlhbMDt5J2_isAvgYMk4Ugvc",
     authDomain: "groupup-c482e.firebaseapp.com",
@@ -10,14 +9,20 @@ var config = {
     messagingSenderId: "18796911954"
 };
 
-if(!firebase.apps.length){
-    const defApp = firebase.initializeApp(config);
+var app = firebase.initializeApp(config);
+var db = app.database();
+
+var name = 'Bane';
+
+function print_snap(snap){
+    console.log(snap.val());
 }
 
-const db = firebase.database();
-const auth = firebase.auth();
+function print_querry(name){
+	let ref = db.ref('users');
 
-export {
-    auth,
-    db,
-};
+	ref.once("value").then(print_snap);
+}
+
+
+print_querry();
